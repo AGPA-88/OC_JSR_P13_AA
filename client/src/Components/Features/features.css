@@ -1,8 +1,10 @@
+
 .features {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    background-color: white;
   }
   
   @media (min-width: 920px) {

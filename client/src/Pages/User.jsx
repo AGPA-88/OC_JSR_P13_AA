@@ -5,13 +5,13 @@ import User from '../Components/User/User';
 
 function Index () {
     return(
-        <body>
+        <div>
           <Nav />
           <main>
             <User />
           </main>
           <Footer />
-        </body>
+        </div>
     )
 }
 

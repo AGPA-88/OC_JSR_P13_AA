@@ -5,13 +5,11 @@ import SignIn from '../Components/SignIn/SignIn';
 
 function Index () {
     return(
-        <body>
+        <div>
           <Nav />
-          <main>
-            <SignIn />
-          </main>
+          <SignIn />
           <Footer />
-        </body>
+        </div>
     )
 }
 

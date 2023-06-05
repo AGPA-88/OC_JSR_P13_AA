@@ -6,14 +6,14 @@ import Footer from '../Components/Footer/Footer';
 
 function Index () {
     return(
-        <body>
+        <div>
           <Nav />
           <main>
             <Hero />
             <Features />
           </main>
           <Footer />
-        </body>
+        </div>
     )
 }
 

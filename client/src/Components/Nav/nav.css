@@ -6,7 +6,7 @@
   }
   
   .main-nav a {
-    font-weight: bold;
+    font-weight: bolder;
     color: #2c3e50;
   }
   
@@ -21,6 +21,10 @@
   
   .main-nav-item:hover {
     text-decoration: underline;
+  }
+
+  .main-nav-item i{
+    padding: 5px;
   }
   
   .main-nav-logo {

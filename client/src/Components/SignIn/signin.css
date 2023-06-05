@@ -1,5 +1,7 @@
 main {
-    height: 700px;
+    height: 785px;
+    /* background-color: #12002b; */
+    padding-top: 25px;
 }
 .sign-in-button {
     display: block;
@@ -11,6 +13,7 @@ main {
     border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
+    text-align: center;
   }
   
   .sign-in-content {
@@ -20,17 +23,18 @@ main {
     margin: 0 auto;
     margin-top: 3rem;
     padding: 2rem;
+    /* padding-top: 3rem; */
     /* height: 400px; */
   }
   .sign-in-content h1 {
     text-align: center;
   }
+
   
-  .sign-in-icon {
-    font-size: 5rem;
-    background-color: red!important;
-    border: solid green 5px;
+ .sign-in-icon {
+    font-size: inherit;
     text-align: center;
+    width: 100%;
     z-index: 1;
   }
   

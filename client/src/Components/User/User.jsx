@@ -1,13 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Account from '../Account/Account';
+import { getProfileData, updateUserProfile } from '../../tools/api';
 import './user.css';
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { renameUser } from "../../store/redux";
+
 
 function User() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  console.log(firstName, lastName);
+  const token = sessionStorage.getItem('token');
+  const user = useSelector((state) => state.user);
+  console.log(user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    
+    if (!token){
+      console.log('No valid token', token);
+      navigate('/sign-in');
+    }
+    console.log(token)
+    // Fetch or set the values for firstName and lastName here
+    // For example, you can make an API call to retrieve user data
+    const fetchUserData = async () => {
+      try {
+        const userData = await getProfileData(token);
+        dispatch(renameUser(userData));
+        console.log(userData, userData.firstName, userData.lastName);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleEditName = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveName = () => {
+    // Perform save logic here
+    setIsEditing(false);
+    updateUserProfile(firstName, lastName, token);
+    dispatch(renameUser({firstName: firstName, lastName: lastName}));
+  };
+  
+
   return (
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button">Edit Name</button>
+        {/* <h1>Welcome back<br />{firstName} {lastName}!</h1> */}
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <button onClick={handleSaveName}>Save</button>
+          </div>
+        ) : (
+          <div>
+            <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
+            <button className="edit-button" onClick={handleEditName}>
+              Edit Name
+            </button>
+          </div>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
       <Account
