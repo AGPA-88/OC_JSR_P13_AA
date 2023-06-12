@@ -37,7 +37,7 @@ function User() {
       }
     };
 
-    fetchUserData();
+    if (user.firstName === '') fetchUserData();
   }, []);
 
   const handleEditName = () => {
@@ -47,8 +47,12 @@ function User() {
   const handleSaveName = () => {
     // Perform save logic here
     setIsEditing(false);
-    updateUserProfile(firstName, lastName, token);
-    dispatch(renameUser({firstName: firstName, lastName: lastName}));
+    const userInfo =  {firstName:firstName, lastName:lastName};
+    if (firstName === '') userInfo.firstName = user.firstName
+    if (lastName === '') userInfo.lastName = user.lastName
+    console.log(user.firstName, user.lastName);
+    updateUserProfile(userInfo.firstName, userInfo.lastName, token);
+    dispatch(renameUser(userInfo));
   };
   
 
@@ -57,18 +61,25 @@ function User() {
       <div className="header">
         {/* <h1>Welcome back<br />{firstName} {lastName}!</h1> */}
         {isEditing ? (
-          <div>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            <button onClick={handleSaveName}>Save</button>
+          <div className="edit-container">
+            <div className="edit-name">
+              <input
+                type="text"
+                value={firstName}
+                placeholder={user.firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <input
+                type="text"
+                value={lastName}
+                placeholder={user.lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div className="edit-name-button"> 
+              <button onClick={handleSaveName}>Save</button>
+              <button onClick={()=>{setIsEditing(false)}}>Cancel</button>
+            </div>
           </div>
         ) : (
           <div>
