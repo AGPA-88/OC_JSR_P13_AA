@@ -171,6 +171,42 @@ paths:
         '404':
           description: Not Found
 
+    put:
+      tags:
+        - Transaction Module
+      summary: Update transaction details
+      description: Updates the notes and category of a transaction.
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated transaction details
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details updated successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+
 definitions:
   User:
     properties:
@@ -226,6 +262,7 @@ definitions:
         type: string
 
   Transaction:
+    required: [id, amount, description]
     properties:
       id:
         type: string
@@ -238,25 +275,16 @@ definitions:
         description: Transaction description
       notes:
         type: string
-        description: Additional information key
+        description: Additional transaction information
       category:
         type: string
-        description: Additional information value
+        description: Transaction category
 
   TransactionUpdate:
     properties:
-      amount:
-        type: number
-        description: Updated transaction amount
-      description:
+      notes:
         type: string
-        description: Updated transaction description
-      additionalInformation:
-        type: object
-        properties:
-          key:
-            type: string
-            description: Updated additional information key
-          value:
-            type: string
-            description: Updated additional information value
+        description: Updated transaction notes
+      category:
+        type: string
+        description: Updated transaction category
