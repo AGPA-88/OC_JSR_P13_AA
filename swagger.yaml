@@ -8,6 +8,11 @@ host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /user/login:
     post:
@@ -33,6 +38,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -57,6 +63,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -70,11 +77,12 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -93,6 +101,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -103,18 +112,65 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile updated successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+
+  /transactions:
+    get:
+      tags:
+        - Transaction Module
+      summary: View all transactions for the current month
+      description: Retrieves all transactions for the current month.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '404':
+          description: Not Found
+
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - Transaction Module
+      summary: View additional details of a transaction
+      description: Retrieves additional details of a specific transaction.
+      produces:
+        - application/json
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to retrieve additional details
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transaction'
+        '404':
+          description: Not Found
+
 definitions:
   User:
     properties:
@@ -130,6 +186,7 @@ definitions:
       lastName:
         type: string
         description: user last name
+
   Login:
     properties:
       email:
@@ -138,6 +195,7 @@ definitions:
       password:
         type: string
         description: user password
+
   ApiResponse:
     type: object
     properties:
@@ -152,11 +210,13 @@ definitions:
             type: string
           email:
             type: string
+
   LoginResponse:
     type: object
     properties:
       token:
         type: string
+
   UserProfile:
     type: object
     properties:
@@ -164,3 +224,39 @@ definitions:
         type: string
       lastName:
         type: string
+
+  Transaction:
+    properties:
+      id:
+        type: string
+        description: Transaction ID
+      amount:
+        type: number
+        description: Transaction amount
+      description:
+        type: string
+        description: Transaction description
+      notes:
+        type: string
+        description: Additional information key
+      category:
+        type: string
+        description: Additional information value
+
+  TransactionUpdate:
+    properties:
+      amount:
+        type: number
+        description: Updated transaction amount
+      description:
+        type: string
+        description: Updated transaction description
+      additionalInformation:
+        type: object
+        properties:
+          key:
+            type: string
+            description: Updated additional information key
+          value:
+            type: string
+            description: Updated additional information value
