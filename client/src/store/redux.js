@@ -10,7 +10,7 @@ const userSlice = createSlice({
         renameUser: (state, action) => {
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
-            console.log(state.firstName)   
+            // console.log(state.firstName)   
             return state;
         }
     }, 

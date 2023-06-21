@@ -12,26 +12,26 @@ function User() {
   const [lastName, setLastName] = useState('');
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
-  console.log(firstName, lastName);
+  // console.log(firstName, lastName);
   const token = sessionStorage.getItem('token');
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     
     if (!token){
-      console.log('No valid token', token);
+      // console.log('No valid token', token);
       navigate('/sign-in');
     }
-    console.log(token)
+    // console.log(token)
     // Fetch or set the values for firstName and lastName here
     // For example, you can make an API call to retrieve user data
     const fetchUserData = async () => {
       try {
         const userData = await getProfileData(token);
         dispatch(renameUser(userData));
-        console.log(userData, userData.firstName, userData.lastName);
+        // console.log(userData, userData.firstName, userData.lastName);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -50,7 +50,7 @@ function User() {
     const userInfo =  {firstName:firstName, lastName:lastName};
     if (firstName === '') userInfo.firstName = user.firstName
     if (lastName === '') userInfo.lastName = user.lastName
-    console.log(user.firstName, user.lastName);
+    // console.log(user.firstName, user.lastName);
     updateUserProfile(userInfo.firstName, userInfo.lastName, token);
     dispatch(renameUser(userInfo));
   };

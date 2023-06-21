@@ -16,10 +16,10 @@ function SignIn() {
     const password = passwordInput.value;
     try {
       const response = await authenticateUser(email, password);
-      console.log(response);
+      // console.log(response);
       const token = response;
 
-      console.log({email, password});
+      // console.log({email, password});
       // Store the token in localStorage
       sessionStorage.setItem('token', token);
       navigate("/profile");

@@ -5,7 +5,7 @@ export async function authenticateUser(email, password) {
       email: email,
       password: password
     });
-    console.log(response);
+    // console.log(response);
     return response.data.body.token;
   }
 export async function createUserAccount() {
@@ -22,7 +22,7 @@ export async function createUserAccount() {
     }
   }
 export async function updateUserProfile(firstName, lastName, token) {
-  console.log(token);
+  // console.log(token);
   try {
     const response = await axios.put('http://localhost:3001/api/v1/user/profile', {
       firstName: firstName,

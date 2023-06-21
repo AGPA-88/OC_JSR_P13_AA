@@ -9,3 +9,15 @@
     margin: 0;
     padding: 0;
   }
+
+  @media screen and (max-width:920px) {
+    main{
+      height: 100%!important;
+      min-height: 785px;
+    }
+    /* .footer{
+      position: relative!important;
+      margin-top: auto!important;
+      bottom: 0!important;
+    } */
+  }
